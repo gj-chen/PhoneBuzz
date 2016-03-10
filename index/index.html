@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Set this to the main language of your site -->
+<head>
+    <meta charset="utf-8">
+    
+    <title>PhoneBuzz</title>
+ 
+    <meta name="description" content="Web application created to play PhoneBuzz integrated with Twilio API">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Add normalize.css which enables browsers to render all elements more consistently and in line with modern standards as it only targets particular styles that need normalizing -->
+    <link href="normalize.css" rel="stylesheet" media="all">
+    
+    <!-- Include the site stylesheet -->
+    <link href="styles.css" rel="stylesheet" media="all">
+    
+</head>
+<body>
+
+    <!-- The page header typically contains items such as your site heading, logo and possibly the main site navigation -->
+    <!-- ARIA: the landmark role "banner" is set as it is the prime heading or internal title of the page --> 
+    <header role="banner">
+    
+        <h1>PhoneBuzz</h1>
+        
+    </header>
+    
+    <!-- If you want to use an element as a wrapper, i.e. for styling only, then <div> is still the element to use -->
+    <div class="wrap">
+        <main role="main">
+            <section>
+                <article id="introduction">
+                
+                    <!-- A <header> element is not required here as the heading only contains a single <h3> element -->             
+                    <h3>Instructions</h3>
+                    
+                    <!-- Content -->
+                    <p>To play PhoneBuzz, dial this Twilio phone number and enter a number.</p>
+                    
+                </article>
+                
+            </section>
+            
+        </main>
+        
+    </div>
+    
+    <!-- The main page footer can contain items such as copyright and contact information. It can also contain a duplicated navigation of your site which is not usually contained within a <nav> -->
+    <!-- ARIA: the landmark role "contentinfo" is added here as it contains metadata that applies to the parent document -->
+    <footer role="contentinfo">
+    
+        <!-- Copyright information can be contained within the <small> element. The <time> element is used here to indicate that the '2016' is a date -->
+        <small>Copyright &copy; <time datetime="2016">2016</time></small>
+        
+    </footer>
+    
+</body>
+</html>
