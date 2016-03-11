@@ -24,11 +24,10 @@ var server = http.createServer(function(req, res){
 			timeout: '20'
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
-    	})
-    	.redirect('/fizzbuzzhtml.html');
+    	});
+    	//.redirect('/fizzbuzzhtml.html');
     	//.say('You did not press anything');
     
-
 	var parsedUrl = url.parse(req.url, true); // true to get query as object
   	var queryAsObject = parsedUrl.query;
 
