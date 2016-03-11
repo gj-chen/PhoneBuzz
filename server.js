@@ -7,7 +7,7 @@ var twilio = require('twilio');
 var app = express(); 
 
 //Create an HTTP server that renders TwiML 
-http.createServer.listen(process.env.PORT || 5000, function(req, res){
+http.createServer(function(req, res){
 	//Create a TwiML response 
 	var resp = new twilio.TwimlResponse(); 
 	//The TwiML response object will have function on it that correspond 
@@ -22,6 +22,6 @@ http.createServer.listen(process.env.PORT || 5000, function(req, res){
 		'Content-Type': 'text/xml'
 	}); 
 	res.end(resp.toString()); 
-})//.listen(5000); 
+}).listen(5000); 
 
 console.log('Visit http://localhost:5000/ in your browser to see TwiML document!'); 
