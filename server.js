@@ -6,6 +6,9 @@ var twilio = require('twilio');
 //create an express application 
 var app = express(); 
 
+//Routes for our API 
+var router = express.Router(); //gets an instance of the express Router 
+
 //Create an HTTP server that renders TwiML 
 var server = http.createServer(function(req, res){
 	//Create a TwiML response 
@@ -14,13 +17,15 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	action: "~/fizzbuzzhtml.html",
+        	action: "~/fizzbuzz.js",
         	method:'GET',
         	finishOnKey: '*',
 			timeout: '20'
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
-    });
+    	})
+    	.say('You did not press anything');
+    
 
 	//console.log(resp.toString());
 
@@ -30,6 +35,11 @@ var server = http.createServer(function(req, res){
 	}); 
 	res.end(resp.toString()); 
 }).listen(process.env.PORT || 5000); 
+
+//route to new page 
+router.route('/fizzbuzz.js');
+console.log('should have routed to new page')
+
 
 //server.listen(config.port, function(){
 //	console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
