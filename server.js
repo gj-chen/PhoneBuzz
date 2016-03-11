@@ -2,6 +2,7 @@
 var twilio = require('twilio'); 
 	express = require('express'); 
 	http = require('http');
+	url = require("url");
 
 //create an express application 
 var app = express(); 
@@ -17,15 +18,20 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	action: "~/fizzbuzzhtml.html",
-        	method:'GET',
+        	//action: "~/fizzbuzzhtml.html",
+        	//method:'GET',
         	finishOnKey: '*',
 			timeout: '20'
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
-    	})
-    	.say('You did not press anything');
+    	});
+    	//.say('You did not press anything');
     
+
+	var parsedUrl = url.parse(req.url, true); // true to get query as object
+  	var queryAsObject = parsedUrl.query;
+
+  	console.log(JSON.stringify(queryAsObject));
 
 	//console.log(resp.toString());
 
@@ -36,9 +42,13 @@ var server = http.createServer(function(req, res){
 	res.end(resp.toString()); 
 }).listen(process.env.PORT || 5000); 
 
+//obtain the digits inputted from gather 
+
+
+
 //route to new page 
-router.route('/fizzbuzzhtml.html');
-console.log('should have routed to new page')
+//router.route('/fizzbuzzhtml.html');
+//console.log('should have routed to new page')
 
 
 //server.listen(config.port, function(){
