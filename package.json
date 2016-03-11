@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "body-parser": "~1.0.1",
+    "ejs": "~2.3.3",
     "express": "^4.13.4",
-    "mongoose": "~3.6.13",
-    "ejs": "~2.3.3"
+    "twilio": "~2.9.0"
   },
   "license": "Apache-2.0"
 }
