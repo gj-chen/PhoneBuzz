@@ -22,9 +22,9 @@ http.createServer(function(req, res){
 		'Content-Type': 'text/xml'
 	}); 
 	res.end(resp.toString()); 
-}).listen(1337); 
+}).listen(5000); 
 
-console.log('Visit http://localhost:1337/ in your browser to see TwiML document!'); 
+console.log('Visit http://localhost:5000/ in your browser to see TwiML document!'); 
 
 //Render an HTML page which contains a capability token that
 //will grant persmission to accept inbound calls to th ID 
