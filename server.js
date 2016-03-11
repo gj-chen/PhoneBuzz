@@ -25,7 +25,7 @@ var server = http.createServer(function(req, res){
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
     	});
-    	.redirect('/fizzbuzzhtml.html')
+    	.redirect('/fizzbuzzhtml.html');
     	//.say('You did not press anything');
     
 
