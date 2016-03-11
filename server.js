@@ -26,7 +26,7 @@ var server = http.createServer(function(req, res){
 	res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	}); 
-	//res.end(resp.toString()); 
+	res.end(resp.toString()); 
 }).listen(process.env.PORT || 5000); 
 
 //server.listen(config.port, function(){
