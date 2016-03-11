@@ -1,12 +1,14 @@
 {
   "name": "PhoneBuzz",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+    },
   "description": "A simple PhoneBuzz game",
   "repository": {
     "type": "git",
     "url": "https://github.com/gj-chen/PhoneBuzz"
   },
-  "start": "node server.js",
   "engines": {
     "node": "~5.8.0"
   },
