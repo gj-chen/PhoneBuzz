@@ -30,3 +30,22 @@ var server = http.createServer(function(req, res){
 //	console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 //});
 console.log('Visit http://localhost:5000/ in your browser to see TwiML document!'); 
+
+app.get('/', function(req, res){
+ 	//Create an object which will generate a capability token 
+ 	//Replace these two arguments with own account SID/auth token
+ 	var capability = new twilio.Capability(
+ 		'ACa1d489ae50b6b27532f10084df4310e7',
+        'e9fe291240918d37f60e595c043940b4'
+ 	);
+ 
+ 	//Give the capability generator permission to acccept incoming 
+ 	//calls to ID 'gloria'
+ 	capability.allowClientIncoming('gloria'); 
+ 
+ 	//Render an HTML page which contains our capability token 
+ 	res.render('index.ejs',{
+ 		token:capability.generate()
+ 	}); 
+ });
+console.log('Added the calling feature to my application!'); 
