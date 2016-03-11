@@ -17,7 +17,6 @@ var server = http.createServer(function(req, res){
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!');
 
 	//Render the TwiML document using 'toString' 
-	//Since we do not want it to show up explicitly - comment out rendering 
 	res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	}); 
