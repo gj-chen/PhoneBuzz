@@ -14,10 +14,11 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	//finishOnKey: '#',
-			timeout: '60'
+        	action: "~/PhoneBuzz/fizzbuzz.js"
+        	finishOnKey: '*',
+			timeout: '20'
     	}, function() {
-        	this.say('Please enter a number and press the pound key when complete.');
+        	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
     });
 
 	//console.log(resp.toString());
