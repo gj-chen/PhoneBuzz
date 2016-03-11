@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Set this to the main language of your site -->
+<body>
+ 
+<!-- include the Twilio Client JavaScript SDK -->
+    <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
+ 
+    <!-- include jQuery to make DOM manipulation and event handling nicer -->
+    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+ 
+    <!-- accept incoming calls to this client -->
+    <script type="text/javascript">
+        var twilio = require('twilio');
+        var resp = new twilio.TwimlResponse();
+
+        resp.say('Welcome to Acme Customer Service!')
+        .gather({
+            //action:'http://www.example.com/callFinished.php',
+            //finishOnKey:'*'
+        }, function() {
+            this.say('Press 1 for customer service')
+                .say('Press 2 for British customer service', { language:'en-gb' });
+        });
+
+        //res.writeHead(200, {
+        //'Content-Type': 'text/xml'
+        //}); 
+        //res.end(resp.toString());
+        
+        console.log(resp.toString());
+
+    </script>
+    
+</body>
+</html>
