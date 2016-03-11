@@ -25,27 +25,3 @@ http.createServer(function(req, res){
 }).listen(5000); 
 
 console.log('Visit http://localhost:5000/ in your browser to see TwiML document!'); 
-
-//Render an HTML page which contains a capability token that
-//will grant persmission to accept inbound calls to th ID 
-//'gloria' (this can be any string)
-
-app.get('/', function(req, res){
-	//Create an object which will generate a capability token 
-	//Replace these two arguments with own account SID/auth token
-	var capability = new twilio.Capability(
-		'ACa1d489ae50b6b27532f10084df4310e7',
-        'e9fe291240918d37f60e595c043940b4'
-	);
-
-	//Give the capability generator permission to acccept incoming 
-	//calls to ID 'gloria'
-	capability.allowClientIncoming('gloria'); 
-
-	//Render an HTML page which contains our capability token 
-	res.render('index.ejs',{
-		token:capability.generate()
-	}); 
-});
-//app.listen(1337); 
-//console.log('Visit http://localhost:1337/ to accept inbound calls!');
