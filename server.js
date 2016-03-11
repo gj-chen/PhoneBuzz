@@ -17,7 +17,7 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	action: "~/fizzbuzz.js",
+        	action: "~/fizzbuzzhtml.html",
         	method:'GET',
         	finishOnKey: '*',
 			timeout: '20'
@@ -37,7 +37,7 @@ var server = http.createServer(function(req, res){
 }).listen(process.env.PORT || 5000); 
 
 //route to new page 
-router.route('/fizzbuzz.js');
+router.route('/fizzbuzzhtml.html');
 console.log('should have routed to new page')
 
 
