@@ -76,7 +76,7 @@ var server = http.createServer(function(req, res){
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
-    res.send(resp.toString());
+    res.end(resp.toString());
 
 	/*var resp = new twilio.TwimlResponse(); 
 	 
