@@ -63,9 +63,9 @@ app.get('/', function(req, res){
 //Create an HTTP server that renders TwiML 
 var server = http.createServer(function(req, res){
 	//Create a TwiML response 
-	var twilio = new twilio.TwimlResponse(); 
+	var resp = new twilio.TwimlResponse(); 
 
-	twilio.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
+	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
 		.gather({
 			finishOnKey: '*', 
 			timeout: '20' 
@@ -76,7 +76,7 @@ var server = http.createServer(function(req, res){
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
-    res.send(twiml.toString());
+    res.send(resp.toString());
 
 	/*var resp = new twilio.TwimlResponse(); 
 	 
