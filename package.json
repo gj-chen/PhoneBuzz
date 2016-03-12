@@ -2,7 +2,7 @@
   "name": "PhoneBuzz",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node newserver.js"
   },
   "description": "A simple PhoneBuzz game",
   "repository": {
