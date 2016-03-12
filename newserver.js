@@ -60,42 +60,22 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
 	console.log(digit_entered);
-	if(digit_entered > 40){
-		resp.say('Sorry please enter a number less than 40')
-			.gather({
-        		action: '/fizzbuzz',
-        		finishOnKey:'*'
-    		}, function() {
-        		this.say('Please enter a number');
-    		});
+	for (i = 0; i < digit_entered; i++) { 
+    	if(i % 3 == 0){
+    		resp.say('fizz');
+    	}
+    	if(i % 5 == 0){
+    		resp.say('buzz');
+    	}
+    	if(i % 3 == 0 && i % 5 == 0){
+    		resp.say('fizzbuzz');
+    	}
+    	else{
+    		resp.say(i);
+    	}
 	}
-	else{
-		for (i = 0; i < digit_entered; i++) { 
-    		if(i % 3 == 0){
-    			resp.say('fizz');
-    		}
-    		if(i % 5 == 0){
-    			resp.say('buzz');
-    		}
-    		if(i % 3 == 0 && i % 5 == 0){
-    			resp.say('fizzbuzz');
-    		}
-    		else{
-    			resp.say(i);
-    		}
-		}
-	}
+}
 
-	
-	/*
-	resp.say('Welcome to Acme Customer Service!')
-    	.gather({
-        	finishOnKey:'*'
-    	}, function() {
-        	this.say('Press 1 for customer service')
-            	.say('Inside router post', { language:'en-gb' });
-    	});
-*/
 	console.log(resp.toString());
 	
 	res.writeHead(200, {
@@ -109,7 +89,6 @@ router.get('/fizzbuzz', function(req, res, next) {
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
 
