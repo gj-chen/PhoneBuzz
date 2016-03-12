@@ -10,7 +10,7 @@ var app = express();
 var router = express.Router();
 
 
-http.createServer(app).listen(5000);
+http.createServer(app).listen(process.env.PORT || 5000);
 
 //Middleware
 router.use(function(req, res, next) {
