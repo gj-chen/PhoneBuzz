@@ -22,25 +22,10 @@ router.use(function(req, res, next) {
 
 
 //Router paths - http://localhost:8080/
-//Creates capability token to allow incoming calls
-/*router.get('/', function(req, res, next) {
-    //Create an object which will generate a capability token 
- 	//Replace these two arguments with own account SID/auth token
-
- 	var capability = new twilio.Capability(
- 		//process.env.TWILIO_ACCOUNT_SID,
- 		'ACa1d489ae50b6b27532f10084df4310e7',
-      	'e9fe291240918d37f60e595c043940b4'
-      	//process.env.TWILIO_AUTH_TOKEN
- 	);
- 	console.log('inside router.get /');
- 	//Give the capability generator permission to acccept incoming 
- 	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7'); 
-
-	var token = capability.generate();
- 
-
-});*/
+//First page 
+router.get('/', function(req, res, next) {
+   res.sendFile(path.join(__dirname + '/index/index.html'));
+});
 
 router.get('/firstpage', function(req, res, next){
 	
@@ -92,7 +77,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 
 
 //app.get 
-//app.get('/', router);
+app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 
