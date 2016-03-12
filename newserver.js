@@ -12,25 +12,23 @@ app.get('/', function(req, res){
  	//Create an object which will generate a capability token 
  	//Replace these two arguments with own account SID/auth token
  	var capability = new twilio.Capability(
- 		process.env.TWILIO_ACCOUNT_SID,
-      	process.env.TWILIO_AUTH_TOKEN
+ 		//process.env.TWILIO_ACCOUNT_SID,
+ 		'ACa1d489ae50b6b27532f10084df4310e7',
+      	'e9fe291240918d37f60e595c043940b4'
+      	//process.env.TWILIO_AUTH_TOKEN
  	);
  
  	//Give the capability generator permission to acccept incoming 
  	//calls to ID 'gloria'
  	capability.allowClientIncoming(process.env.TWILIO_ACCOUNT_SID); 
  
- 	var token = capability.generate(); 
+ 	//Render an HTML page which contains our capability token 
+ 	res.render('index.ejs',{
+ 		token:capability.generate()
+ 	}); 
+ }).listen(process.env.PORT || 5000);
 
- 	Twilio.Device.setup('<%= token %>');
- 	// Register an event handler to be called when there is an incoming call 
-    Twilio.Device.incoming(function(connection){
-    //For demo purposed, automatically accept the call
-        connection.accept();
-    });
- });
-
-app.get('/', function(req, res){
+app.post('/', function(req, res){
 	var resp = new twilio.TwimlResponse(); 
 	 
 	resp.say({voice: 'woman'}, 'Gloria testing Twilio and Node.js')
@@ -42,7 +40,8 @@ app.get('/', function(req, res){
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
     	});
-}).listen(process.env.PORT || 5000); 
+    console.log("hi gloria youre inside the post function");
+});//.listen(process.env.PORT || 5000); 
 
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
