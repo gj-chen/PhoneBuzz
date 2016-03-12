@@ -9,16 +9,21 @@ var app = express();
 //Create an Express router 
 var router = express.Router();
 
-//Middleware for Router Paths on every request 
+
+http.createServer(app).listen(5000);
+
+//Middleware
 router.use(function(req, res, next) {
     // log each request to the console
     console.log(req.method, req.url);
+    // continue doing what we were doing and go to the route
     next(); 
 });
 
+
 //Router paths - http://localhost:8080/
 //Creates capability token to allow incoming calls
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
     //Create an object which will generate a capability token 
  	//Replace these two arguments with own account SID/auth token
 
@@ -28,7 +33,7 @@ router.get('/', function(req, res) {
       	'e9fe291240918d37f60e595c043940b4'
       	//process.env.TWILIO_AUTH_TOKEN
  	);
- 
+ 	console.log('inside router.get /');
  	//Give the capability generator permission to acccept incoming 
  	capability.allowClientIncoming(process.env.TWILIO_ACCOUNT_SID); 
  
@@ -36,22 +41,58 @@ router.get('/', function(req, res) {
  	res.render('index.ejs',{
  		token:capability.generate()
  	}); 
+
+ 	var resp = new twilio.TwimlResponse(); 
+
+	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
+		.gather({
+			action: '/fizzbuzz',
+			method: 'GET',
+			finishOnKey: '*', 
+			timeout: '20' 
+		}, function(){
+			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
+		}); 
+    
+    console.log(resp.toString());
+    //res.writeHead(200, {
+	//	'Content-Type': 'text/xml'
+	//});
+    //res.end(resp.toString());
 });
-//Fizzbuzz route 
-//router.get('/fizzbuzz', function(req, res) {
-//    res.send('Im the fizzbuzz page!'); 
-//});
 
-var fizzbuzz = require('./fizzbuzz');
+console.log('pre router.get/fizzbuzz');
+//Router path /fizzbuzz 
+router.get('/fizzbuzz', function(req, res, next) {
+  var resp = new twilio.TwimlResponse();
 
-//Create capability token to allow incoming calls
+	resp.say('Welcome to Acme Customer Service!')
+    	.gather({
+        	action:'http://www.example.com/callFinished.php',
+        	finishOnKey:'*'
+    	}, function() {
+        	this.say('Press 1 for customer service')
+            	.say('Inside router post', { language:'en-gb' });
+    	});
+
+	console.log(resp.toString());
+	
+	/*res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
+    res.end(resp.toString());*/
+});
+
+
+//app.get 
 app.get('/', router);
 app.get('/fizzbuzz', router);
 
-
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
-var server = http.createServer(function(req, res){
+
+
+/*var server = http.createServer(function(req, res){
 	//Create a TwiML response 
 	var resp = new twilio.TwimlResponse(); 
 
@@ -70,6 +111,6 @@ var server = http.createServer(function(req, res){
 	});
     res.end(resp.toString());
 }).listen(process.env.PORT || 5000);
-
+*/
 
 console.log('Added the calling feature to my application!'); 
