@@ -21,7 +21,6 @@ router.use(function(req, res, next) {
 });
 
 
-
 //Router paths - http://localhost:8080/
 //Creates capability token to allow incoming calls
 router.get('/', function(req, res, next) {
@@ -41,11 +40,14 @@ router.get('/', function(req, res, next) {
 	var token = capability.generate();
  
  	//Render an HTML page which contains our capability token 
- 	//res.render('index.ejs',{
- 	//	token:capability.generate()
- 	//}); 
+ 	res.render('index.ejs',{
+ 		token:capability.generate()
+ 	}); 
 
- 	var resp = new twilio.TwimlResponse(); 
+});
+
+router.get('/firstpage', function(req, res, next){
+	var resp = new twilio.TwimlResponse(); 
 
 	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
 		.gather({
@@ -62,7 +64,7 @@ router.get('/', function(req, res, next) {
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
-});
+})
 
 console.log('pre router.get/fizzbuzz');
 //Router path /fizzbuzz 
@@ -88,6 +90,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 
 //app.get 
 app.get('/', router);
+app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 
 //Nothing is changed here 
