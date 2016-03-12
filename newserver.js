@@ -43,7 +43,8 @@ router.use(function(req, res, next) {
 });*/
 
 router.get('/firstpage', function(req, res, next){
-	var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
+	
+	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
 
 	//Create a capability token for a client named "jenny"
 	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7');
@@ -91,7 +92,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 
 
 //app.get 
-app.get('/', router);
+//app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 
