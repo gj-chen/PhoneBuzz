@@ -21,6 +21,7 @@ router.use(function(req, res, next) {
 });
 
 
+
 //Router paths - http://localhost:8080/
 //Creates capability token to allow incoming calls
 router.get('/', function(req, res, next) {
@@ -35,12 +36,14 @@ router.get('/', function(req, res, next) {
  	);
  	console.log('inside router.get /');
  	//Give the capability generator permission to acccept incoming 
- 	capability.allowClientIncoming(process.env.TWILIO_ACCOUNT_SID); 
+ 	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7'); 
+
+	var token = capability.generate();
  
  	//Render an HTML page which contains our capability token 
- 	res.render('index.ejs',{
- 		token:capability.generate()
- 	}); 
+ 	//res.render('index.ejs',{
+ 	//	token:capability.generate()
+ 	//}); 
 
  	var resp = new twilio.TwimlResponse(); 
 
@@ -55,31 +58,15 @@ router.get('/', function(req, res, next) {
 		}); 
     
     console.log(resp.toString());
-    //res.writeHead(200, {
-	//	'Content-Type': 'text/xml'
-	//});
-    //res.end(resp.toString());
+    res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
+    res.end(resp.toString());
 });
 
 console.log('pre router.get/fizzbuzz');
 //Router path /fizzbuzz 
 router.get('/fizzbuzz', function(req, res, next) {
-	var capability = new twilio.Capability(
- 		//process.env.TWILIO_ACCOUNT_SID,
- 		'ACa1d489ae50b6b27532f10084df4310e7',
-      	'e9fe291240918d37f60e595c043940b4'
-      	//process.env.TWILIO_AUTH_TOKEN
- 	);
- 	
- 	//Give the capability generator permission to acccept incoming 
- 	capability.allowClientIncoming(process.env.TWILIO_ACCOUNT_SID); 
- 
- 	//Render an HTML page which contains our capability token 
- 	res.render('index.ejs',{
- 		token:capability.generate()
- 	}); 
-
- 	
 	var resp = new twilio.TwimlResponse();
 
 	resp.say('Welcome to Acme Customer Service!')
@@ -92,10 +79,10 @@ router.get('/fizzbuzz', function(req, res, next) {
 
 	console.log(resp.toString());
 	
-	/*res.writeHead(200, {
+	res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
-    res.end(resp.toString());*/
+    res.end(resp.toString());
 });
 
 
