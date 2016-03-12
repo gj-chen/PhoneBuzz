@@ -23,7 +23,7 @@ router.use(function(req, res, next) {
 
 //Router paths - http://localhost:8080/
 //Creates capability token to allow incoming calls
-router.get('/', function(req, res, next) {
+/*router.get('/', function(req, res, next) {
     //Create an object which will generate a capability token 
  	//Replace these two arguments with own account SID/auth token
 
@@ -39,14 +39,16 @@ router.get('/', function(req, res, next) {
 
 	var token = capability.generate();
  
- 	//Render an HTML page which contains our capability token 
- 	res.render('index.ejs',{
- 		token:capability.generate()
- 	}); 
 
-});
+});*/
 
 router.get('/firstpage', function(req, res, next){
+	var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
+
+	//Create a capability token for a client named "jenny"
+	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7');
+	var token = capability.generate();
+
 	var resp = new twilio.TwimlResponse(); 
 
 	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
