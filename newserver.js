@@ -64,7 +64,7 @@ router.get('/', function(req, res, next) {
 console.log('pre router.get/fizzbuzz');
 //Router path /fizzbuzz 
 router.get('/fizzbuzz', function(req, res, next) {
-	/*var capability = new twilio.Capability(
+	var capability = new twilio.Capability(
  		//process.env.TWILIO_ACCOUNT_SID,
  		'ACa1d489ae50b6b27532f10084df4310e7',
       	'e9fe291240918d37f60e595c043940b4'
@@ -79,7 +79,7 @@ router.get('/fizzbuzz', function(req, res, next) {
  		token:capability.generate()
  	}); 
 
- 	*/
+ 	
 	var resp = new twilio.TwimlResponse();
 
 	resp.say('Welcome to Acme Customer Service!')
