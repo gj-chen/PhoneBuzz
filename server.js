@@ -19,9 +19,9 @@ var server = http.createServer(function(req, res){
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
         	action: "/",
-        	//method:'GET',
+        	method:'GET',
         	finishOnKey: '*',
-			timeout: '20'
+			//timeout: '20'
     	}, function() {
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
     	});
