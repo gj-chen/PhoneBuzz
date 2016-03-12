@@ -60,8 +60,30 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
 	console.log(digit_entered);
-	if(digit_entered < 20){
-		resp.say('Welcome to Acme Customer Service!');
+	if(digit_entered > 40){
+		resp.say('Sorry please enter a number less than 40')
+			.gather({
+        		action: '/fizzbuzz',
+        		finishOnKey:'*'
+    		}, function() {
+        		this.say('Please enter a number');
+    		});
+	}
+	else{
+		for (i = 0; i < digit_entered; i++) { 
+    		if(i % 3 == 0){
+    			resp.say('fizz');
+    		}
+    		if(i % 5 == 0){
+    			resp.say('buzz');
+    		}
+    		if(i % 3 == 0 && i % 5 == 0){
+    			resp.say('fizzbuzz');
+    		}
+    		else{
+    			resp.say(i);
+    		}
+		}
 	}
 
 	
