@@ -74,7 +74,6 @@ router.get('/fizzbuzz', function(req, res, next) {
     		resp.say(i);
     	}
 	}
-}
 
 	console.log(resp.toString());
 	
