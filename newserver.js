@@ -60,10 +60,10 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
 	
-	var result = ""; 
+	var result = []; 
 	for (var i = 1; i <= digit_entered; i++) { 
-        if (i%3 == 0) result += "Fizz";        
-        if (i%5 == 0) result += "Buzz";
+        if (i%3 == 0) result += "fizz";        
+        if (i%5 == 0) result += "buzz";
         if (i%3 == 0 && i%5 == 0) result+= "Fizzbuzz"; 
         else result += i; 
 	}
