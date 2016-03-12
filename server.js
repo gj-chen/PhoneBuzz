@@ -18,8 +18,8 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	action: "/",
-        	method:'GET',
+        	action: "www.google.com",
+        	method:'POST',
         	finishOnKey: '*',
 			//timeout: '20'
     	}, function() {
@@ -28,22 +28,22 @@ var server = http.createServer(function(req, res){
     	//.redirect('/fizzbuzzhtml.html');
     	//.say('You did not press anything');
     
-	var parsedUrl = url.parse(req.url, true); // true to get query as object
-	console.log(req.url);
-	console.log(parsedUrl);
-  	var queryAsObject = parsedUrl.query; //{Digits = "#####"}
+	//var parsedUrl = url.parse(req.url, true); // true to get query as object
+	//console.log(req.url);
+	//console.log(parsedUrl);
+  	//var queryAsObject = parsedUrl.query; //{Digits = "#####"}
 
-  	console.log("This is the queryAsObject: ")
-  	console.log(queryAsObject); 
+  	//console.log("This is the queryAsObject: ")
+  	//console.log(queryAsObject); 
 
   	//Convert JS object into JSON text and store in a string 
-  	var stringObject = JSON.stringify(queryAsObject); 
-  	console.log(stringObject);
+  	//var stringObject = JSON.stringify(queryAsObject); 
+  	//console.log(stringObject);
   	//convert into JS objects 
-  	var digitObject = JSON.parse(stringObject); 
-  	console.log(digitObject.Digits);
+  	//var digitObject = JSON.parse(stringObject); 
+  	//console.log(digitObject.Digits);
 
-  	resp.say({voice: 'woman'}, 'You reached the end');
+  	//resp.say({voice: 'woman'}, 'You reached the end');
 
   	//var parsedObject = JSON.parse(queryAsObject); 
   	//console.log(parsedObject.Digits); 
