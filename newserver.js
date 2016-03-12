@@ -4,18 +4,22 @@ var twilio = require('twilio');
 	http = require('http');
 	path = require('path'); 
 
-
 //Create an Express application
 var app = express(); 
 //Create an Express router 
 var router = express.Router();
 
-//app.use('/', express.static(__dirname + 'PhoneBuzz/index/index.html/'));
-//app.set("index", __dirname+'/index/index.html');
+//Middleware for Router Paths on every request 
+router.use(function(req, res, next) {
+    // log each request to the console
+    console.log(req.method, req.url);
+    next(); 
+});
 
-//Create capability token to allow incoming calls
-app.get('/', function(req, res){
- 	//Create an object which will generate a capability token 
+//Router paths - http://localhost:8080/
+//Creates capability token to allow incoming calls
+router.get('/', function(req, res) {
+    //Create an object which will generate a capability token 
  	//Replace these two arguments with own account SID/auth token
 
  	var capability = new twilio.Capability(
@@ -32,31 +36,18 @@ app.get('/', function(req, res){
  	res.render('index.ejs',{
  		token:capability.generate()
  	}); 
- });//.listen(process.env.PORT || 5000);
+});
+//Fizzbuzz route 
+//router.get('/fizzbuzz', function(req, res) {
+//    res.send('Im the fizzbuzz page!'); 
+//});
 
+var fizzbuzz = require('./fizzbuzz');
 
-/*app.post('/', function(req, res){
-	var resp = new twilio.TwimlResponse(); 
-	 
-	resp.say({voice: 'woman'}, 'Gloria testing Twilio and Node.js')
-    	.gather({
-        	//action: "http://www.google.com",
-        	//method:'GET',
-        	finishOnKey: '*',
-			timeout: '20'
-    	}, function() {
-        	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
-    	});
-    console.log("hi gloria youre inside the post function");
+//Create capability token to allow incoming calls
+app.get('/', router);
+app.get('/fizzbuzz', router);
 
-    //Render the TwiML document using 'toString' 
-	res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	}); 
-	res.send(twiml.toString());
-	res.end(resp.toString());
-})//.listen(process.env.PORT || 5000); 
-*/
 
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
@@ -66,18 +57,18 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
 		.gather({
+			action: '/fizzbuzz',
+			method: 'GET',
 			finishOnKey: '*', 
 			timeout: '20' 
 		}, function(){
 			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
 		}); 
-    //console.log("hi gloria youre inside the post function");
+    
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
-
-	
 }).listen(process.env.PORT || 5000);
 
 

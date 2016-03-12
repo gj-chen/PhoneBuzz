@@ -1,7 +1,39 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Set this to the main language of your site -->
-<body>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>PhoneBuzz</title>
  
+    <meta name="description" content="Web application created to play PhoneBuzz integrated with Twilio API">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Add normalize.css which enables browsers to render all elements more consistently and in line with modern standards as it only targets particular styles that need normalizing -->
+    <link href="normalize.css" rel="stylesheet" media="all">
+    
+    <!-- Include the site stylesheet -->
+    <link href="styles.css" rel="stylesheet" media="all">
+    
+</head>
+
+<body>
+     <header role="banner">
+        <h1>PhoneBuzz</h1>
+    </header>
+    
+
+    <div class="wrap">
+        <main role="main">
+            <section>
+                <article id="introduction">
+           
+                    <h3>Instructions</h3>
+                    <p>To play PhoneBuzz, dial this Twilio phone number and enter a number.</p>
+                </article>
+            </section>
+        </main>
+    </div>
+
 <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
  

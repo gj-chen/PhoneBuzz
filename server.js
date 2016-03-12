@@ -24,8 +24,8 @@ var server = http.createServer(function(req, res){
 	 
 	resp.say({voice: 'woman'}, 'Gloria testing Twilio and Node.js')
     	.gather({
-        	action: "http://www.google.com",
-        	//method:'GET',
+        	action: '/fizzbuzz.js',
+        	method: 'GET',
         	finishOnKey: '*',
 			timeout: '20'
     	}, function() {
@@ -55,10 +55,6 @@ app.get('/', function(req, res){
  	res.render('index.ejs',{
  		token:capability.generate()
  	}); 
- });
-
-app.get('www.google.com', function(req, res){
- 	res.send('www.google.com');
  });
 
 
