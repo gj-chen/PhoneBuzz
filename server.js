@@ -18,7 +18,7 @@ var server = http.createServer(function(req, res){
 
 	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
     	.gather({
-        	//action: "~/fizzbuzzhtml.html",
+        	action: "/",
         	//method:'GET',
         	finishOnKey: '*',
 			timeout: '20'
@@ -29,11 +29,35 @@ var server = http.createServer(function(req, res){
     	//.say('You did not press anything');
     
 	var parsedUrl = url.parse(req.url, true); // true to get query as object
-  	var queryAsObject = parsedUrl.query;
+	console.log(req.url);
+	console.log(parsedUrl);
+  	var queryAsObject = parsedUrl.query; //{Digits = "#####"}
 
-  	console.log(JSON.stringify(queryAsObject));
+  	console.log("This is the queryAsObject: ")
+  	console.log(queryAsObject); 
 
-	//console.log(resp.toString());
+  	//Convert JS object into JSON text and store in a string 
+  	var stringObject = JSON.stringify(queryAsObject); 
+  	console.log(stringObject);
+  	//convert into JS objects 
+  	var digitObject = JSON.parse(stringObject); 
+  	console.log(digitObject.Digits);
+
+  	resp.say({voice: 'woman'}, 'You reached the end');
+
+  	//var parsedObject = JSON.parse(queryAsObject); 
+  	//console.log(parsedObject.Digits); 
+
+  	//var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
+	//var contact = JSON.parse(jsontext);
+	//document.write(contact.surname + ", " + contact.firstname);
+
+  	//console.log(JSON.stringify(queryAsObject));
+
+  	var resp2 = new twilio.TwimlResponse(); 
+  	//if(Digits > 100){
+  	//	resp.say({voice: 'woman'}, 'The number you entered is greater than 100');
+  	//}
 
 	//Render the TwiML document using 'toString' 
 	res.writeHead(200, {
