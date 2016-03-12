@@ -30,10 +30,23 @@ app.get('/', function(req, res){
     });
  });
 
+app.get('/', function(req, res){
+	var resp = new twilio.TwimlResponse(); 
+	 
+	resp.say({voice: 'woman'}, 'Gloria testing Twilio and Node.js')
+    	.gather({
+        	//action: "http://www.google.com",
+        	//method:'GET',
+        	finishOnKey: '*',
+			timeout: '20'
+    	}, function() {
+        	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
+    	});
+}).listen(process.env.PORT || 5000); 
 
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
-var server = http.createServer(function(req, res){
+/*var server = http.createServer(function(req, res){
 	//Create a TwiML response 
 	var resp = new twilio.TwimlResponse(); 
 	 
@@ -54,5 +67,5 @@ var server = http.createServer(function(req, res){
 	res.end(resp.toString()); 
 }).listen(process.env.PORT || 5000);
 
-
+*/
 console.log('Added the calling feature to my application!'); 
