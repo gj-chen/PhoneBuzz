@@ -16,7 +16,7 @@ var server = http.createServer(function(req, res){
 	var resp = new twilio.TwimlResponse(); 
 	 
 
-	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am testing Twilio and Node.js!')
+	resp.say({voice: 'woman'}, 'hello!! This is Gloria. I am a silly goose and I like bears, also david is a very cool guy :D')
     	.gather({
         	action: "www.google.com",
         	method:'POST',
