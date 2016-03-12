@@ -57,8 +57,15 @@ router.get('/firstpage', function(req, res, next){
 console.log('pre router.get/fizzbuzz');
 //Router path /fizzbuzz 
 router.get('/fizzbuzz', function(req, res, next) {
+	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
+	console.log(digit_entered);
+	if(digit_entered < 20){
+		resp.say('Welcome to Acme Customer Service!');
+	}
 
+	
+	/*
 	resp.say('Welcome to Acme Customer Service!')
     	.gather({
         	finishOnKey:'*'
@@ -66,7 +73,7 @@ router.get('/fizzbuzz', function(req, res, next) {
         	this.say('Press 1 for customer service')
             	.say('Inside router post', { language:'en-gb' });
     	});
-
+*/
 	console.log(resp.toString());
 	
 	res.writeHead(200, {
