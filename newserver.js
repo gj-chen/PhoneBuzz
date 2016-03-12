@@ -73,6 +73,9 @@ var server = http.createServer(function(req, res){
 			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
 		}); 
     console.log("hi gloria youre inside the post function");
+    res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
     res.send(twiml.toString());
 
 	/*var resp = new twilio.TwimlResponse(); 
