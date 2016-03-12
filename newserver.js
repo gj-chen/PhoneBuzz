@@ -6,6 +6,12 @@ var twilio = require('twilio');
 
 //Create an Express application
 var app = express(); 
+//Create an Express router 
+var router = express.Router();
+//Router paths 
+//var call = require('/');
+//Use cases 
+//app.use('/', call);
 
 //Create capability token to allow incoming calls
 app.get('/', function(req, res){
@@ -29,6 +35,20 @@ app.get('/', function(req, res){
  }).listen(process.env.PORT || 5000);
 
 app.post('/', function(req, res){
+	var twilio = new twilio.TwimlResponse(); 
+
+	twilio.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
+		.gather({
+			finishOnKey: '*', 
+			timeout: '20' 
+		}, function(){
+			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
+		}); 
+    console.log("hi gloria youre inside the post function");
+    res.send(twiml.toString());
+}); 
+
+/*app.post('/', function(req, res){
 	var resp = new twilio.TwimlResponse(); 
 	 
 	resp.say({voice: 'woman'}, 'Gloria testing Twilio and Node.js')
@@ -41,7 +61,15 @@ app.post('/', function(req, res){
         	this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
     	});
     console.log("hi gloria youre inside the post function");
+
+    //Render the TwiML document using 'toString' 
+	res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	}); 
+	res.send(twiml.toString());
+	res.end(resp.toString());
 });//.listen(process.env.PORT || 5000); 
+*/
 
 //Nothing is changed here 
 //Create an HTTP server that renders TwiML 
