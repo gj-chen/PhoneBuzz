@@ -68,8 +68,7 @@ router.get('/fizzbuzz', function(req, res, next) {
         else result += i; 
 	}
 	
-	resultString = result.toString(); 
-	resp.say(resultString);
+	resp.say(result);
 
 	console.log(resp.toString());
 	
