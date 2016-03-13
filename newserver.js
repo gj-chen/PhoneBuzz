@@ -66,7 +66,10 @@ router.get('/fizzbuzz', function(req, res, next) {
         if (i%3 == 0) result += 'fizz ';        
         else if (i%5 == 0) result += "buzz ";
         else if (i%3 == 0 && i%5 == 0) result+= "Fizzbuzz "; 
-        else result += i; 
+        else{
+        	result += i;
+        	result += " "; 
+        } 
 	}
 	
 	resp.say(result);
