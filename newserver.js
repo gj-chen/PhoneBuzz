@@ -46,15 +46,14 @@ router.get('/firstpage', function(req, res, next){
 		}, function(){
 			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
 		}); 
-    
-    console.log(resp.toString());
+
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
 })
 
-console.log('pre router.get/fizzbuzz');
+
 //Router path /fizzbuzz 
 router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
@@ -87,24 +86,6 @@ router.get('/fizzbuzz', function(req, res, next) {
 
 	resp.say({voice: 'woman'}, result);
 
-	/*var result;
-	console.log("before loop"); 
-	
-
-	for (var i = 1; i <= digit_entered; i++) { 
-        if (i%3 == 0) result += ' fizz ';        
-        else if (i%5 == 0) result += " buzz ";
-        else if (i%3 == 0 && i%5 == 0) result+= " Fizzbuzz "; 
-        else {
-        	result += i;
-        } 
-	}
-	
-	resp.say("The fizz buzz results are ")
-		.say(result);
-
-	console.log(result);
-	*/ 
 	res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
@@ -116,29 +97,3 @@ router.get('/fizzbuzz', function(req, res, next) {
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-//Nothing is changed here 
-//Create an HTTP server that renders TwiML 
-
-
-/*var server = http.createServer(function(req, res){
-	//Create a TwiML response 
-	var resp = new twilio.TwimlResponse(); 
-
-	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
-		.gather({
-			action: '/fizzbuzz',
-			method: 'GET',
-			finishOnKey: '*', 
-			timeout: '20' 
-		}, function(){
-			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
-		}); 
-    
-    res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	});
-    res.end(resp.toString());
-}).listen(process.env.PORT || 5000);
-*/
-
-console.log('Added the calling feature to my application!'); 
