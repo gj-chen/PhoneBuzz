@@ -60,8 +60,36 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
 	
+	int i = 1;
 	var result;
+		while (i <= digit_entered) {
+			if (i % 3 == 0 && i % 5 == 0) {
+				result+= "Fizzbuzz";
+			}
+			else if (i % 3 == 0) {
+				result+= "Fizz";
+			}
+
+			else if (i % 5 == 0) {
+				result+= "Buzz";
+			}
+
+			else {
+				result+= i;
+			}
+
+			if (i < digit_entered) {
+				result += ", ";
+			}
+
+			i++;
+		}
+	resp.say(result);
+
+	/*var result;
 	console.log("before loop"); 
+	
+
 	for (var i = 1; i <= digit_entered; i++) { 
         if (i%3 == 0) result += ' fizz ';        
         else if (i%5 == 0) result += " buzz ";
@@ -75,7 +103,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 		.say(result);
 
 	console.log(result);
-	
+	*/ 
 	res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
