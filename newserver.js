@@ -72,12 +72,16 @@ router.get('/fizzbuzz', function(req, res, next) {
 			else if (i % 5 == 0) {
 				result+= "Buzz";
 			}
+			else if(i == 1){
+				result += "1";
+			}
 			else {
 				result+= i;
 			}
 			if (i < digit_entered) {
 				result += ", ";
 			}
+			
 			i++;
 		}
 
