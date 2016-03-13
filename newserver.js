@@ -60,7 +60,8 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var digit_entered = req.param('Digits');
 	var resp = new twilio.TwimlResponse();
 	
-	var result = ""; 
+	var result = "";
+	console.log("before loop"); 
 	for (var i = 1; i <= digit_entered; i++) { 
         if (i%3 == 0) result += 'fizz';        
         else if (i%5 == 0) result += "buzz ";
@@ -70,7 +71,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 	
 	resp.say(result);
 
-	console.log(resp.toString());
+	console.log(result);
 	
 	res.writeHead(200, {
 		'Content-Type': 'text/xml'
