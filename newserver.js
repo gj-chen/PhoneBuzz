@@ -63,13 +63,11 @@ router.get('/fizzbuzz', function(req, res, next) {
 	var result;
 	console.log("before loop"); 
 	for (var i = 1; i <= digit_entered; i++) { 
+        result = "";
         if (i%3 == 0) result += 'fizz ';        
         else if (i%5 == 0) result += "buzz ";
         else if (i%3 == 0 && i%5 == 0) result+= "Fizzbuzz "; 
-        else{
-        	result += i;
-        	result += " "; 
-        } 
+        else result += i; 
 	}
 	
 	resp.say(result);
