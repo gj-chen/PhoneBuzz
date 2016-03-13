@@ -37,14 +37,14 @@ router.get('/firstpage', function(req, res, next){
 
 	var resp = new twilio.TwimlResponse(); 
 
-	resp.say({voice: 'woman'}, 'Gloria is testing Twilio and Node.js')
+	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
 		.gather({
 			action: '/fizzbuzz',
 			method: 'GET',
 			finishOnKey: '*', 
 			timeout: '20' 
 		}, function(){
-			this.say('Please enter a number and press the star key when complete. You have 20 seconds.');
+			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
 		}); 
     
     console.log(resp.toString());
@@ -85,7 +85,7 @@ router.get('/fizzbuzz', function(req, res, next) {
 			i++;
 		}
 
-	resp.say(result);
+	resp.say({voice: 'woman'}, result);
 
 	/*var result;
 	console.log("before loop"); 
