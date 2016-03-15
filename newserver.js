@@ -103,9 +103,11 @@ router.get('/fizzbuzz', function(req, res, next) {
     res.end(resp.toString());
 });
 
-router.get('/getnumber', function(req, res, next){
+
+router.post('/getnumber', function(req, res, next){
 	//Obtaining value of phone number
-	var phonenumber = req.param('phonenumber');
+	//var phonenumber = req.param('phonenumber');
+	var phonenumber = req.body.phonenumber;
 	console.log('the number number is:');
 	console.log(phonenumber);
 
@@ -113,7 +115,7 @@ router.get('/getnumber', function(req, res, next){
 	console.log('number_grabbed');
 	var number = '+1' + number_grabbed;
 	console.log(number);
-	
+
 	//Token to allow outgoing calls 
 	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
 	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
@@ -125,34 +127,12 @@ router.get('/getnumber', function(req, res, next){
 	client.makeCall({
     	to: number, // Any number Twilio can call
     	from: '+19256607526', // A number you bought from Twilio and can use for outbound communication
-    	url: '/letsplay' // A URL that produces an XML document (TwiML) which contains instructions for the call
+    	url: '/firstpage' // A URL that produces an XML document (TwiML) which contains instructions for the call
 	}, function(err, responseData) {
     //executed when the call has been initiated.
     console.log(err); // outputs "+14506667788"*/
 	});
-
-	res.send('higloglo');
 });
-
-router.get('/letsplay', function(req, res, next){
-
-	var resp = new twilio.TwimlResponse(); 
-
-	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
-		.gather({
-			action: '/fizzbuzz',
-			method: 'GET',
-			finishOnKey: '*', 
-			timeout: '20' 
-		}, function(){
-			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
-		}); 
-
-    res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	});
-    res.end(resp.toString());
-})
 
 
 
@@ -160,7 +140,7 @@ router.get('/letsplay', function(req, res, next){
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-app.get('/getnumber', router);
-app.get('/letsplay', router);
+//app.get('/letsplay', router);
+app.post('/getnumber', router);
 //app.get('makecall', router);
 //app.get('/dialnumber', router); 
