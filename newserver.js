@@ -65,7 +65,7 @@ router.get('/firstpage', function(req, res, next){
 })
 
 
-router.get('/hello', function(req, res, next){
+router.get('https://www.desolate-anchorage-71888.herokuapp.com/hello', function(req, res, next){
 	var resp = new twilio.TwimlResponse(); 
 
 	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
@@ -168,7 +168,7 @@ router.post('/getnumber', function(req, res, next){
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
-app.get('/hello', router);
+app.get('https://www.desolate-anchorage-71888.herokuapp.com/hello', router);
 app.get('/fizzbuzz', router);
 app.post('/getnumber', router);
 //app.get('makecall', router);
