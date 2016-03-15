@@ -131,7 +131,7 @@ router.get('/getnumber', function(req, res, next){
       	client.makeCall({
             to: phonenumber,
             from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
+            url: 'https://desolate-anchorage-71888.herokuapp.com/hello'
         }, function(err, message) {
             if (err) {
                 res.status(500).send(err);
@@ -146,11 +146,40 @@ router.get('/getnumber', function(req, res, next){
 });
 
 
+router.post('/hello', function(req, res, next){
+	
+	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
+
+	//Create a capability token for incoming & outcoming calls 
+	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7');
+	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
+
+	var token = capability.generate();
+
+	var resp = new twilio.TwimlResponse(); 
+
+	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
+		.gather({
+			action: '/fizzbuzz',
+			method: 'GET',
+			finishOnKey: '*', 
+			timeout: '20' 
+		}, function(){
+			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
+		}); 
+
+    res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
+    res.end(resp.toString());
+})
+
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
+app.post('/hello', router);
 //app.get('makecall', router);
 //app.get('/dialnumber', router); 
