@@ -33,6 +33,8 @@ router.get('/', function(req, res, next) {
    res.sendFile(path.join(__dirname + '/index/index.html'));
 });
 
+console.log('below get /');
+
 router.get('/firstpage', function(req, res, next){
 	
 	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
@@ -100,59 +102,36 @@ router.get('/fizzbuzz', function(req, res, next) {
     res.end(resp.toString());
 });
 
-//Generate outcoming capability token and make phone call 
-router.post('/outcoming', function(req, res, next){
-	//Create access to make outgoing calls 
-	var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-
-	//Create a capability token for outcoming calls
-	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
-
-	var token = capability.generate();
-
+router.post('/getnumber', function(req, res, next){
 	//Obtaining POST value of phone number
 	var phonenumber_from_form = req.body.phonenumber;
 	//Append +1(for USA calls) to correct format 
 	var phonenumber = "+1" + phonenumber_from_form;
 
 	console.log(phonenumber);
- 
-	 client.makeCall({
-            to: phonenumber,
-            from: +19256606725,
-            url: './dialnumber' //A URL that produces an XML document (TwiML) which contains instructions for the callr
-        }, function(err, message) {
-            console.log('Made it inside the makeCall function');
-            console.log('The phone number from to: phonenumber is:')
-            console.log(phonenumber);
-            console.log(err);
+});
 
-        });
+console.log('outside of post');
 
-    /*res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	});
-    res.end(resp.toString());*/
-})
+//Client makes call 
+/*var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
+client.makeCall({
 
-//Dial number XML code function 
-router.get('/dialnumber', function(req, res, next){
-	var resp = new twilio.TwimlResponse(); 
-	console.log('inside the dialnumber function');
+    to:'+16515556677', // Any number Twilio can call
+    from: '+14506667788', // A number you bought from Twilio and can use for outbound communication
+    url: 'http://www.example.com/twiml.php' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
-	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz');
-		
-    res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	});
-    res.end(resp.toString());
-}) 
+}, function(err, responseData) {
+
+    //executed when the call has been initiated.
+    console.log(responseData.from); // outputs "+14506667788"
+
+});*/
 
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-app.post('/outcoming', router);
-app.get('/dialnumber', router); 
+app.post('/getnumber', router);
+//app.get('/dialnumber', router); 
