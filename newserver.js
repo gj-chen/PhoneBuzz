@@ -124,14 +124,23 @@ router.post('/getnumber', function(req, res, next){
 	//Make a call and respond with TwiML from given URL
 	var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
 	
-	client.makeCall({
-    	to: number, // Any number Twilio can call
-    	from: '+19256607526', // A number you bought from Twilio and can use for outbound communication
-    	url: '/firstpage' // A URL that produces an XML document (TwiML) which contains instructions for the call
-	}, function(err, responseData) {
-    //executed when the call has been initiated.
-    console.log(err); // outputs "+14506667788"*/
-	});
+    console.log(req.headers.host);
+        // Place an outbound call to the user, using the TwiML instructions
+        // from the /outbound route
+      	client.makeCall({
+            to: phonenumber,
+            from: '+19256607526',
+            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
+        }, function(err, message) {
+            console.log(err);
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                res.send({
+                    message: 'Thank you! We will be calling you shortly.'
+                });
+            }
+        });
 });
 
 
