@@ -107,11 +107,16 @@ router.post('/getnumber', function(req, res, next){
 	var phonenumber_from_form = req.body.phonenumber;
 	//Append +1(for USA calls) to correct format 
 	var phonenumber = "+1" + phonenumber_from_form;
-
 	console.log(phonenumber);
+
+	//sending the phone number using res.send
+	res.send(phonenumber);
+
 });
 
 console.log('outside of post');
+
+
 
 //Client makes call 
 /*var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
