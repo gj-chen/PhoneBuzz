@@ -121,7 +121,7 @@ router.post('/outcoming', function(req, res, next){
 	 client.makeCall({
             to: phonenumber,
             from: +19256606725,
-            url: '/firstpage'
+            url: '/dialnumber'
         }, function(err, message) {
             console.log('Made it inside the makeCall function');
             console.log('The phone number from to: phonenumber is:')
@@ -130,24 +130,30 @@ router.post('/outcoming', function(req, res, next){
 
         });
 
-	/*resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
-		.gather({
-			action: '/fizzbuzz',
-			method: 'GET',
-			finishOnKey: '*', 
-			timeout: '20' 
-		}, function(){
-			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
-		}); */
+    /*res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
+    res.end(resp.toString());*/
+})
 
+//Dial number function
+router.get('/', function(req, res, next) {
+   res.sendFile(path.join(__dirname + '/index/index.html'));
+});
+
+router.get('/dialnumber', function(req, res, next){
+	
+	
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
-})
+}) 
+
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.post('/outcoming', router);
+app.get('dialnumber', router); 
