@@ -121,7 +121,7 @@ router.post('/outcoming', function(req, res, next){
 	 client.makeCall({
             to: phonenumber,
             from: +19256606725,
-            url: '/dialnumber'
+            url: './dialnumber' //A URL that produces an XML document (TwiML) which contains instructions for the callr
         }, function(err, message) {
             console.log('Made it inside the makeCall function');
             console.log('The phone number from to: phonenumber is:')
@@ -136,14 +136,13 @@ router.post('/outcoming', function(req, res, next){
     res.end(resp.toString());*/
 })
 
-//Dial number function
-router.get('/', function(req, res, next) {
-   res.sendFile(path.join(__dirname + '/index/index.html'));
-});
-
+//Dial number XML code function 
 router.get('/dialnumber', function(req, res, next){
-	
-	
+	var resp = new twilio.TwimlResponse(); 
+	console.log('inside the dialnumber function');
+
+	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz');
+		
     res.writeHead(200, {
 		'Content-Type': 'text/xml'
 	});
@@ -156,4 +155,4 @@ app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.post('/outcoming', router);
-app.get('dialnumber', router); 
+app.get('/dialnumber', router); 
