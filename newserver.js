@@ -66,15 +66,6 @@ router.get('/firstpage', function(req, res, next){
 
 
 router.get('/hello', function(req, res, next){
-	
-	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-
-	//Create a capability token for incoming & outcoming calls 
-	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7');
-	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
-
-	var token = capability.generate();
-
 	var resp = new twilio.TwimlResponse(); 
 
 	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
