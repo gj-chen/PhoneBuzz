@@ -161,8 +161,6 @@ router.get('/hello', function(req, res, next){
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
-
-	
 });
 
 
@@ -171,6 +169,6 @@ app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.post('/getnumber', router);
-app.get('hello', router)
+app.get('/hello', router)
 //app.get('makecall', router);
 //app.get('/dialnumber', router); 
