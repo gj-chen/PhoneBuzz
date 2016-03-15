@@ -13,7 +13,7 @@ var app = express();
 var router = express.Router();
 
 //Creates a server for app to listen to 
-http.createServer(app).listen(process.env.PORT || 5000);
+http.createServer(app).listen(process.env.PORT || 8080);
 
 //Uses bodyParser to support JSON encoded bodies 
 app.use(bodyParser.json()); 
@@ -46,26 +46,6 @@ router.get('/firstpage', function(req, res, next){
 
 	var token = capability.generate();
 
-	var resp = new twilio.TwimlResponse(); 
-
-	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
-		.gather({
-			action: '/fizzbuzz',
-			method: 'GET',
-			finishOnKey: '*', 
-			timeout: '20' 
-		}, function(){
-			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
-		}); 
-
-    res.writeHead(200, {
-		'Content-Type': 'text/xml'
-	});
-    res.end(resp.toString());
-})
-
-
-router.get('/hello', function(req, res, next){
 	var resp = new twilio.TwimlResponse(); 
 
 	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
@@ -123,10 +103,10 @@ router.get('/fizzbuzz', function(req, res, next) {
 });
 
 
-router.post('/getnumber', function(req, res, next){
+router.get('/getnumber', function(req, res, next){
 	//Obtaining value of phone number
 	//var phonenumber = req.param('phonenumber');
-	var phonenumber = req.body.phonenumber;
+	var phonenumber = req.param('phonenumber');
 	console.log('the number number is:');
 	console.log(phonenumber);
 
@@ -137,28 +117,30 @@ router.post('/getnumber', function(req, res, next){
 
 	//Token to allow outgoing calls 
 	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
+	capability.allowClientIncoming('ACa1d489ae50b6b27532f10084df4310e7');
 	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
 	var token = capability.generate();
 
 	//Make a call and respond with TwiML from given URL
 	var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-	
+	console.log('before null');
     console.log(req.headers.host);
+    console.log('after null');
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
       	client.makeCall({
             to: phonenumber,
             from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/hello'
+            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
         }, function(err, message) {
-            console.log(err);
             if (err) {
                 res.status(500).send(err);
-                console.log('error?');
+            
             } else {
                 res.send({
                     message: 'Thank you! We will be calling you shortly.'
                 });
+                console.log('inside the res.send function');
             }
         });
 });
@@ -168,8 +150,7 @@ router.post('/getnumber', function(req, res, next){
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
-app.get('/hello', router);
 app.get('/fizzbuzz', router);
-app.post('/getnumber', router);
+app.get('/getnumber', router);
 //app.get('makecall', router);
 //app.get('/dialnumber', router); 
