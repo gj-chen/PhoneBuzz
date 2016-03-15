@@ -135,6 +135,7 @@ router.post('/getnumber', function(req, res, next){
             console.log(err);
             if (err) {
                 res.status(500).send(err);
+                console.log('error?');
             } else {
                 res.send({
                     message: 'Thank you! We will be calling you shortly.'
@@ -142,47 +143,6 @@ router.post('/getnumber', function(req, res, next){
             }
         });
 });
-
-
-router.post('/getnumber', function(req, res, next){
-	//Obtaining value of phone number
-	//var phonenumber = req.param('phonenumber');
-	var phonenumber = req.body.phonenumber;
-	console.log('the number number is:');
-	console.log(phonenumber);
-
-	var number_grabbed = JSON.parse(phonenumber);
-	console.log('number_grabbed');
-	var number = '+1' + number_grabbed;
-	console.log(number);
-
-	//Token to allow outgoing calls 
-	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-	capability.allowClientOutgoing('ACa1d489ae50b6b27532f10084df4310e7');
-	var token = capability.generate();
-
-	//Make a call and respond with TwiML from given URL
-	var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-	
-    console.log(req.headers.host);
-        // Place an outbound call to the user, using the TwiML instructions
-        // from the /outbound route
-      	client.makeCall({
-            to: phonenumber,
-            from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/hello'
-        }, function(err, message) {
-            console.log(err);
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                res.send({
-                    message: 'Thank you! We will be calling you shortly.'
-                });
-            }
-        });
-});
-
 
 
 router.get('/hello', function(req, res, next){
