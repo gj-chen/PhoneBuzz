@@ -62,6 +62,7 @@ router.get('/firstpage', function(req, res, next){
 		'Content-Type': 'text/xml'
 	});
     res.end(resp.toString());
+    console.log(resp.toString());
 })
 
 //Router path /fizzbuzz 
@@ -107,8 +108,11 @@ router.get('/getnumber', function(req, res, next){
 	//Obtaining value of phone number
 	//var phonenumber = req.param('phonenumber');
 	var phonenumber = req.param('phonenumber');
+	var delay = req.param('delay');
 	console.log('the number number is:');
 	console.log(phonenumber);
+	console.log('the delay is:');
+	console.log(delay);
 
 	var number_grabbed = JSON.parse(phonenumber);
 	console.log('number_grabbed');
@@ -126,6 +130,10 @@ router.get('/getnumber', function(req, res, next){
 	console.log('before null');
     console.log(req.headers.host);
     console.log('after null');
+
+    //setting delay timer 
+
+
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
       	client.makeCall({
@@ -135,12 +143,12 @@ router.get('/getnumber', function(req, res, next){
         }, function(err, message) {
             if (err) {
                 res.status(500).send(err);
-            
             } else {
                 res.send({
                     message: 'Thank you! We will be calling you shortly.'
                 });
                 console.log('inside the res.send function');
+                console.log(req.method, req.url);
             }
         });
 });
@@ -151,5 +159,3 @@ app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
-//app.get('makecall', router);
-//app.get('/dialnumber', router); 
