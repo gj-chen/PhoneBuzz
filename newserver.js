@@ -5,6 +5,7 @@ var twilio = require('twilio');
 	path = require('path'); 
 	url = require('url');
 	bodyParser = require('body-parser'); 
+	//wait = require('wait.for');
 
 
 //Create an Express application
@@ -131,12 +132,30 @@ router.get('/getnumber', function(req, res, next){
     console.log(req.headers.host);
     console.log('after null');
 
-    //setting delay timer 
+    //convert delay string into int 
+    var delayInt = parseInt(delay, 10); 
 
+    //setting delay timer
+    var i = 0; 
+    /*while(i < delayInt){
+		setTimeout(function(){ 
+    		console.log('This should happen 30 times');
+    	}, 1000*delayInt)
+    delayInt--;
+    }*/
+
+
+    setTimeout(function(){ 
+    	client.makeCall({
+            to: phonenumber,
+            from: '+19256607526',
+            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
+        })
+    }, 1000*delayInt)
 
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
-      	client.makeCall({
+      	/*client.makeCall({
             to: phonenumber,
             from: '+19256607526',
             url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
@@ -150,8 +169,9 @@ router.get('/getnumber', function(req, res, next){
                 console.log('inside the res.send function');
                 console.log(req.method, req.url);
             }
-        });
+        });*/
 });
+
 
 
 //app.get 
