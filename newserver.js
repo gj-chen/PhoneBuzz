@@ -3,6 +3,7 @@ var twilio = require('twilio');
 	express = require('express'); 
 	http = require('http');
 	path = require('path'); 
+	url = require('url');
 	bodyParser = require('body-parser'); 
 
 
@@ -102,41 +103,38 @@ router.get('/fizzbuzz', function(req, res, next) {
     res.end(resp.toString());
 });
 
-router.post('/getnumber', function(req, res, next){
-	//Obtaining POST value of phone number
-	var phonenumber_from_form = req.body.phonenumber;
-	//Append +1(for USA calls) to correct format 
-	var phonenumber = "+1" + phonenumber_from_form;
+router.get('/getnumber', function(req, res, next){
+	//Obtaining value of phone number
+	var phonenumber = req.param('phonenumber');
+	console.log('the number number is:');
 	console.log(phonenumber);
 
-	//sending the phone number using res.send
-	res.send(phonenumber);
+	var number_grabbed = JSON.parse(phonenumber);
+	console.log('number_grabbed');
+	var number = '+1' + number_grabbed;
+	console.log(number);
 
-});
-
-console.log('outside of post');
-
-
-
-//Client makes call 
-/*var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
-client.makeCall({
-
-    to:'+16515556677', // Any number Twilio can call
-    from: '+14506667788', // A number you bought from Twilio and can use for outbound communication
-    url: 'http://www.example.com/twiml.php' // A URL that produces an XML document (TwiML) which contains instructions for the call
-
-}, function(err, responseData) {
-
+	//Make a call and respond with TwiML from given URL
+	var client = require('twilio')('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
+	
+	client.makeCall({
+    	to: number, // Any number Twilio can call
+    	from: '+19256607526', // A number you bought from Twilio and can use for outbound communication
+    	url: '/firstpage' // A URL that produces an XML document (TwiML) which contains instructions for the call
+	}, function(err, responseData) {
     //executed when the call has been initiated.
     console.log(responseData.from); // outputs "+14506667788"
+	});
+});
 
-});*/
+
+
+
 
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-app.post('/getnumber', router);
-//app.get('/dialnumber', router); 
+app.get('/getnumber', router);
+app.get('/dialnumber', router); 
