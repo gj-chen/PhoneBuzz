@@ -130,7 +130,7 @@ router.post('/getnumber', function(req, res, next){
       	client.makeCall({
             to: phonenumber,
             from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
+            url: 'https://desolate-anchorage-71888.herokuapp.com/hello'
         }, function(err, message) {
             console.log(err);
             if (err) {
@@ -144,12 +144,33 @@ router.post('/getnumber', function(req, res, next){
 });
 
 
+router.get('/hello', function(req, res, next){
+	var resp = new twilio.TwimlResponse(); 
+
+	resp.say({voice: 'woman'}, 'Hello. This is Robot Gloria. Lets play fizz buzz') 
+		.gather({
+			action: '/fizzbuzz',
+			method: 'GET',
+			finishOnKey: '*', 
+			timeout: '20' 
+		}, function(){
+			this.say({voice: 'woman'}, 'Please enter a number and press the star key when complete. You have 20 seconds.');
+		}); 
+
+    res.writeHead(200, {
+		'Content-Type': 'text/xml'
+	});
+    res.end(resp.toString());
+
+	
+});
+
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-//app.get('/letsplay', router);
 app.post('/getnumber', router);
+app.get('hello', router)
 //app.get('makecall', router);
 //app.get('/dialnumber', router); 
