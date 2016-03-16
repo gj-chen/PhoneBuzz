@@ -33,7 +33,7 @@ router.use(function(req, res, next) {
 //First page 
 router.get('/', function(req, res, next) {
    res.sendFile(path.join(__dirname + '/index/index.html'));
-});
+});  
 
 console.log('below get /');
 
@@ -145,6 +145,17 @@ router.get('/getnumber', function(req, res, next){
     }*/
 
 
+    client.calls.create({
+            url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
+            to: phonenumber,
+            from: "+19256607526",
+            method: "GET"
+        },
+        function(err, call){
+            //process.stdout.write(call.sid);
+            console.log('idk if it worked');
+        });
+
     /*setTimeout(function(){ 
     	client.calls.create({
     		url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
@@ -160,7 +171,7 @@ router.get('/getnumber', function(req, res, next){
 
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
-      	client.makeCall({
+      	/*client.makeCall({
             to: phonenumber,
             from: '+19256607526',
             url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
@@ -174,7 +185,7 @@ router.get('/getnumber', function(req, res, next){
                 console.log('inside the res.send function');
                 console.log(req.method, req.url);
             }
-        });
+        });*/
 });
 
 
