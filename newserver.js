@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 
 console.log('below get /');
 
-router.post('/firstpage', function(req, res, next){
+router.get('/firstpage', function(req, res, next){
 	
 	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
 
@@ -112,8 +112,8 @@ router.get('/getnumber', function(req, res, next){
 	var delay = req.param('delay');
 	console.log('the number number is:');
 	console.log(phonenumber);
-	console.log('the delay is:');
-	console.log(delay);
+	//console.log('the delay is:');
+	//console.log(delay);
 
 	var number_grabbed = JSON.parse(phonenumber);
 	console.log('number_grabbed');
@@ -133,10 +133,10 @@ router.get('/getnumber', function(req, res, next){
     console.log('after null');
 
     //convert delay string into int 
-    var delayInt = parseInt(delay, 10); 
+    //var delayInt = parseInt(delay, 10); 
 
     //setting delay timer
-    var i = 0; 
+    //var i = 0; 
     /*while(i < delayInt){
 		setTimeout(function(){ 
     		console.log('This should happen 30 times');
@@ -145,7 +145,7 @@ router.get('/getnumber', function(req, res, next){
     }*/
 
 
-    setTimeout(function(){ 
+    /*setTimeout(function(){ 
     	client.calls.create({
     		url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
   			to: phonenumber,
@@ -156,11 +156,11 @@ router.get('/getnumber', function(req, res, next){
     		//process.stdout.write(call.sid);
     		console.log('idk if it worked');
 		});
-    }, 1000*delayInt)
+    }, 1000*delayInt)*/
 
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
-      	/*client.makeCall({
+      	client.makeCall({
             to: phonenumber,
             from: '+19256607526',
             url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
@@ -174,13 +174,13 @@ router.get('/getnumber', function(req, res, next){
                 console.log('inside the res.send function');
                 console.log(req.method, req.url);
             }
-        });*/
+        });
 });
 
 
 
 //app.get 
 app.get('/', router);
-app.post('/firstpage', router);
+app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
