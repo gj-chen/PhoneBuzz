@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 
 console.log('below get /');
 
-router.get('/firstpage', function(req, res, next){
+router.post('/firstpage', function(req, res, next){
 	
 	var capability = new twilio.Capability('ACa1d489ae50b6b27532f10084df4310e7', 'e9fe291240918d37f60e595c043940b4');
 
@@ -146,11 +146,16 @@ router.get('/getnumber', function(req, res, next){
 
 
     setTimeout(function(){ 
-    	client.makeCall({
-            to: phonenumber,
-            from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
-        })
+    	client.calls.create({
+    		url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
+  			to: phonenumber,
+    		from: "+19256607526",
+    		method: "GET"
+		}, 
+		function(err, call){
+    		//process.stdout.write(call.sid);
+    		console.log('idk if it worked');
+		});
     }, 1000*delayInt)
 
         // Place an outbound call to the user, using the TwiML instructions
@@ -176,6 +181,6 @@ router.get('/getnumber', function(req, res, next){
 
 //app.get 
 app.get('/', router);
-app.get('/firstpage', router);
+app.post('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
