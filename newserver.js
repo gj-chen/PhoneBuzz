@@ -112,8 +112,8 @@ router.get('/getnumber', function(req, res, next){
 	var delay = req.param('delay');
 	console.log('the number number is:');
 	console.log(phonenumber);
-	//console.log('the delay is:');
-	//console.log(delay);
+	console.log('the delay is:');
+	console.log(delay);
 
 	var number_grabbed = JSON.parse(phonenumber);
 	console.log('number_grabbed');
@@ -133,19 +133,20 @@ router.get('/getnumber', function(req, res, next){
     console.log('after null');
 
     //convert delay string into int 
-    //var delayInt = parseInt(delay, 10); 
+    var delayInt = parseInt(delay, 10); 
 
     //setting delay timer
-    //var i = 0; 
+    var i = 0; 
     /*while(i < delayInt){
 		setTimeout(function(){ 
-    		console.log('This should happen 30 times');
+    		console.log('Inside the delay');
     	}, 1000*delayInt)
     delayInt--;
     }*/
 
-
-    client.calls.create({
+    setTimeout(function(){
+    	console.log('Inside the delay');
+    	client.calls.create({
             url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
             to: phonenumber,
             from: "+19256607526",
@@ -155,7 +156,19 @@ router.get('/getnumber', function(req, res, next){
             //process.stdout.write(call.sid);
             console.log('idk if it worked');
         });
+    }, 1000 * delayInt);
 
+    /*client.calls.create({
+            url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
+            to: phonenumber,
+            from: "+19256607526",
+            method: "GET"
+        },
+        function(err, call){
+            //process.stdout.write(call.sid);
+            console.log('idk if it worked');
+        });
+	*/
     /*setTimeout(function(){ 
     	client.calls.create({
     		url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
