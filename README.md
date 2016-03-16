@@ -6,4 +6,4 @@ To run Phonebuzz locally, use the following command: node newserver.js. You can 
 
 Because the application currently runs on a demo Twilio account, it can only make outgoing calls to my Twilio account. However, you can still make an incoming call to the phone listed. 
 
-Tools used: MongoDB, Express.js, Node.js
+Tools used: MongoDB, Angular.js, Express.js, Node.js (MEAN Stack)
