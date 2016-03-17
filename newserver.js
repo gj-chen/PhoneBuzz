@@ -5,6 +5,7 @@ var twilio = require('twilio');
 	path = require('path'); 
 	url = require('url');
 	bodyParser = require('body-parser'); 
+	mongoose = require('mongoose');
 	//wait = require('wait.for');
 
 
@@ -136,13 +137,6 @@ router.get('/getnumber', function(req, res, next){
     var delayInt = parseInt(delay, 10); 
 
     //setting delay timer
-    var i = 0; 
-    /*while(i < delayInt){
-		setTimeout(function(){ 
-    		console.log('Inside the delay');
-    	}, 1000*delayInt)
-    delayInt--;
-    }*/
 
     setTimeout(function(){
     	console.log('Inside the delay');
@@ -158,47 +152,8 @@ router.get('/getnumber', function(req, res, next){
         });
     }, 1000 * delayInt);
 
-    /*client.calls.create({
-            url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
-            to: phonenumber,
-            from: "+19256607526",
-            method: "GET"
-        },
-        function(err, call){
-            //process.stdout.write(call.sid);
-            console.log('idk if it worked');
-        });
-	*/
-    /*setTimeout(function(){ 
-    	client.calls.create({
-    		url: "https://desolate-anchorage-71888.herokuapp.com/firstpage",
-  			to: phonenumber,
-    		from: "+19256607526",
-    		method: "GET"
-		}, 
-		function(err, call){
-    		//process.stdout.write(call.sid);
-    		console.log('idk if it worked');
-		});
-    }, 1000*delayInt)*/
-
-        // Place an outbound call to the user, using the TwiML instructions
-        // from the /outbound route
-      	/*client.makeCall({
-            to: phonenumber,
-            from: '+19256607526',
-            url: 'https://desolate-anchorage-71888.herokuapp.com/firstpage'
-        }, function(err, message) {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                res.send({
-                    message: 'Thank you! We will be calling you shortly.'
-                });
-                console.log('inside the res.send function');
-                console.log(req.method, req.url);
-            }
-        });*/
+//create a reroute to ../callHistory 
+res.redirect('http://google.com');
 });
 
 
@@ -208,3 +163,91 @@ app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
+
+
+//Mongo Database
+//============================================
+//Connection string 
+var db_url = 'mongodb://gjchen:Gloria05258729@ds015879.mlab.com:15879/callhistory';
+//Create database connection 
+mongoose.connect(db_url); 
+
+//Connection Events 
+//When successfully connected: 
+mongoose.connection.on('connected', function(){
+	console.log('Mongoose default connection opened to: ' + db_url); 
+});
+//If connection throws an error 
+mongoose.connection.on('error', function(err){
+	console.log('Connection error: ' + err); 
+}); 
+//If connection disconnects 
+mongoose.connection.on('disconnected', function(){
+	console.log('Mongoose default connection disconnected'); 
+})
+//If the Node process ends, close the mongoose connection 
+process.on('SIGINT', function(){
+	mongoose.connection.close(function(){
+		console.log('Mongoose default connection disconnected through app closing');
+		process.exit(0);
+	});
+});
+
+
+//Database Schema 
+var Schema = mongoose.Schema; 
+var callHistorySchema = new Schema({
+	numberEntered: String 
+});
+
+//Converting our callHistory schema into a Model 
+var callHistory = mongoose.model('callHistory', callHistorySchema); 
+
+/*
+//Routes for Database 
+//GET all call history 
+router.get('/callHistory', function(req, res, next){
+	//use mongoose to GET all the callHistory in the database 
+	callHistory.find(function(error, callHistory){
+		//if there is a retrieval error, send error 
+		//else, nothing res.send(error) will execute 
+		if(err){
+			res.send(err); 
+		}
+		res.json(callHistory); 
+	});
+});
+*/
+
+//Create call history and send back all calls after creating 
+//router.post('/callHistory', function(req, res, next){
+	/*var phonenumber = req.param('phonenumber');
+	var number_grabbed = JSON.parse(phonenumber);
+	console.log('number_grabbed');
+	var number = '+1' + number_grabbed;
+	console.log(number);*/
+/*
+	var phonenumber = "+1" + req.body.phonenumber;
+	console.log(phonenumber); 
+
+	//Create a call history - information comes from AJAX request from Angular 
+	callHistory.create({
+		numberEntered: phonenumber
+	}, function(err, callHistory){
+		if(err){
+			res.send(err);
+		}
+
+		callHistory.find(function(err, callHistory){
+			if(err){
+				res.send(err);
+			}
+			res.json(callHistory);
+		});
+	});
+});
+//App calls for Database 
+app.get('callHistory', router); 
+app.post('callHistory', router); 
+*/
+
