@@ -153,7 +153,7 @@ router.get('/getnumber', function(req, res, next){
     }, 1000 * delayInt);
 
 //create a reroute to ../callHistory 
-res.redirect('http://google.com');
+//res.redirect('/callHistory');
 });
 
 
@@ -164,7 +164,7 @@ app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
 app.get('/getnumber', router);
 
-
+/*
 //Mongo Database
 //============================================
 //Connection string 
@@ -203,7 +203,7 @@ var callHistorySchema = new Schema({
 //Converting our callHistory schema into a Model 
 var callHistory = mongoose.model('callHistory', callHistorySchema); 
 
-/*
+
 //Routes for Database 
 //GET all call history 
 router.get('/callHistory', function(req, res, next){
@@ -217,16 +217,10 @@ router.get('/callHistory', function(req, res, next){
 		res.json(callHistory); 
 	});
 });
-*/
+
 
 //Create call history and send back all calls after creating 
-//router.post('/callHistory', function(req, res, next){
-	/*var phonenumber = req.param('phonenumber');
-	var number_grabbed = JSON.parse(phonenumber);
-	console.log('number_grabbed');
-	var number = '+1' + number_grabbed;
-	console.log(number);*/
-/*
+router.post('/callHistory', function(req, res, next){
 	var phonenumber = "+1" + req.body.phonenumber;
 	console.log(phonenumber); 
 
@@ -249,5 +243,13 @@ router.get('/callHistory', function(req, res, next){
 //App calls for Database 
 app.get('callHistory', router); 
 app.post('callHistory', router); 
-*/
 
+//Setting up Angular Module
+var callHistoryModule = angular.module('callHistory',[]); 
+
+function mainController($scope, $http){
+	$scope.formData = {}; 
+
+	//when landing on page, get all calls and show them 
+	$http.get('/callHistory')
+};*/
