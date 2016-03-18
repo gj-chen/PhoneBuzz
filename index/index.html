@@ -13,45 +13,74 @@
     
     <!-- Include the site stylesheet -->
     <link href="styles.css" rel="stylesheet" media="all">
+
+    <!-- LOAD JQUERY -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!-- LOAD ANGULAR -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="newserver.js"></script>
+
+    <!-- PROCESS FORM WITH AJAX (NEW) -->
+    <script>
+    // define angular module/app
+    var formApp = angular.module('formApp', []);
+    // create angular controller and pass in $scope and $http
+    formApp.controller('formController', [$scope, function($scope){
+        $scope.formData = {};
+
+        //process the form 
+        $scope.processForm = function(){
+            $http({
+                method:'POST',
+                url: '/getnumber',
+                data: $.param($scope.formData), //pass in data as strings 
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        };
+    }]);
+  </script>
     
 </head>
-<body>
-
-    <!-- The page header typically contains items such as your site heading, logo and possibly the main site navigation -->
-    <!-- ARIA: the landmark role "banner" is set as it is the prime heading or internal title of the page --> 
-    <header role="banner">
-    
-        <h1>PhoneBuzz</h1>
-        
-    </header>
-    
-    <!-- If you want to use an element as a wrapper, i.e. for styling only, then <div> is still the element to use -->
-    <div class="wrap">
-        <main role="main">
+<body ng-app = "formApp" ng-controller = "formController">
+    <h1>PhoneBuzz</h1>
             <section>             
                     <h3>Instructions</h3>
                     <!-- Content -->
                     <p>To play PhoneBuzz, dial 925-660-7526 and enter a number.</p>
                     <p>To play Call Me PhoneBuzz, enter your number below and press enter.</p> 
                     <p>Don't forget to enter the time delay. To have no time delay, enter 0.</p>
-                    <p>Please only input only the 9 digit number: Ex: 5102891555</p>
-                    <form action="/getnumber" method="GET">
-                        <fieldset>
-                            <input type="text" name="phonenumber" placeholder="Enter Phone Number" />
-                            <input type="text" name="delay" placeholder="Enter time delay" />
-                            <input type="submit" value="Let's Play!" />
-                        </fieldset>
-                    </form>
-
-                    <p>
-
-                    </p>
+                    <p>Please only input only the 10 digit number: Ex: 5102891555</p>
+                    
+            <form ng-submit = "processForm">
+                <label>Phone Number</label>
+                <input type="text" name="phonenumber" placeholder="Phone Number" ng-model="formData.phonenumber">
+                
+                <label>Time Delay</label>
+                <input type="text" name="timedelay" placeholder="Time Delay" ng-model="formData.timedelay">
+                
+                <input type="submit" id="submit" value="Submit"/>
+            </form>
             </section>
-            
-        </main>
-        
-    </div>
     
-    
-</body>
+
+     <!-- PROCESS FORM WITH AJAX (NEW) -->
+    <script>
+    // define angular module/app
+    var formApp = angular.module('formApp', []);
+    // create angular controller and pass in $scope and $http
+    formApp.controller('formController', [$scope, function($scope){
+        $scope.formData = {};
+
+        //process the form 
+        $scope.processForm = function(){
+            $http({
+                method:'POST',
+                url: '/getnumber',
+                data: $.param($scope.formData), //pass in data as strings 
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        };
+    }]);
+  </script>
+</body> 
 </html>

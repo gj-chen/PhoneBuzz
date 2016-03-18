@@ -105,16 +105,18 @@ router.get('/fizzbuzz', function(req, res, next) {
     res.end(resp.toString());
 });
 
-
-router.get('/getnumber', function(req, res, next){
+console.log('before get number');
+router.post('/getnumber', function(req, res, next){
 	//Obtaining value of phone number
+	console.log('inside get number before grabbing number');
 	//var phonenumber = req.param('phonenumber');
-	var phonenumber = req.param('phonenumber');
-	var delay = req.param('delay');
+	//var timedelay = req.param('timedelay');
+	var phonenumber = req.body.phonenumber;
+	var timedelay = req.body.timedelay; 
 	console.log('the number number is:');
 	console.log(phonenumber);
 	console.log('the delay is:');
-	console.log(delay);
+	console.log(timedelay);
 
 	var number_grabbed = JSON.parse(phonenumber);
 	console.log('number_grabbed');
@@ -134,7 +136,7 @@ router.get('/getnumber', function(req, res, next){
     console.log('after null');
 
     //convert delay string into int 
-    var delayInt = parseInt(delay, 10); 
+    var delayInt = parseInt(timedelay, 10); 
 
     //setting delay timer
 
@@ -156,13 +158,14 @@ router.get('/getnumber', function(req, res, next){
 //res.redirect('/callHistory');
 });
 
+console.log('skipped get number');
 
 
 //app.get 
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-app.get('/getnumber', router);
+app.post('/getnumber', router);
 
 /*
 //Mongo Database
@@ -236,7 +239,7 @@ router.post('/callHistory', function(req, res, next){
 			if(err){
 				res.send(err);
 			}
-			res.json(callHistory);
+		res.json(callHistory);
 		});
 	});
 });
@@ -244,12 +247,6 @@ router.post('/callHistory', function(req, res, next){
 app.get('callHistory', router); 
 app.post('callHistory', router); 
 
-//Setting up Angular Module
-var callHistoryModule = angular.module('callHistory',[]); 
+*/
 
-function mainController($scope, $http){
-	$scope.formData = {}; 
 
-	//when landing on page, get all calls and show them 
-	$http.get('/callHistory')
-};*/
