@@ -6,7 +6,7 @@ var twilio = require('twilio');
 	url = require('url');
 	bodyParser = require('body-parser'); 
 	mongoose = require('mongoose');
-	//wait = require('wait.for');
+	monk = require('monk');
 
 
 //Create an Express application
@@ -15,17 +15,26 @@ var app = express();
 var router = express.Router();
 
 //Creates a server for app to listen to 
-http.createServer(app).listen(process.env.PORT || 8080);
+http.createServer(app).listen(process.env.PORT || 5000);
 
 //Uses bodyParser to support JSON encoded bodies 
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+//Open MongoDB using monk 
+var db = monk('mongodb://gjchen:Gloria05258729@ds015879.mlab.com:15879/callhistory');
+
+
+
+
+
 
 //Middleware
 router.use(function(req, res, next) {
     // log each request to the console
     console.log(req.method, req.url);
     // continue doing what we were doing and go to the route
+    req.db = db; 
     next(); 
 });
 
@@ -106,13 +115,13 @@ router.get('/fizzbuzz', function(req, res, next) {
 });
 
 console.log('before get number');
-router.post('/getnumber', function(req, res, next){
+router.get('/getnumber', function(req, res, next){
 	//Obtaining value of phone number
 	console.log('inside get number before grabbing number');
-	//var phonenumber = req.param('phonenumber');
-	//var timedelay = req.param('timedelay');
-	var phonenumber = req.body.phonenumber;
-	var timedelay = req.body.timedelay; 
+	var phonenumber = req.param('phonenumber');
+	var timedelay = req.param('timedelay');
+	//var phonenumber = req.body.phonenumber;
+	//var timedelay = req.body.timedelay; 
 	console.log('the number number is:');
 	console.log(phonenumber);
 	console.log('the delay is:');
@@ -165,7 +174,12 @@ console.log('skipped get number');
 app.get('/', router);
 app.get('/firstpage', router);
 app.get('/fizzbuzz', router);
-app.post('/getnumber', router);
+app.get('/getnumber', router);
+
+
+
+
+
 
 /*
 //Mongo Database
@@ -173,7 +187,7 @@ app.post('/getnumber', router);
 //Connection string 
 var db_url = 'mongodb://gjchen:Gloria05258729@ds015879.mlab.com:15879/callhistory';
 //Create database connection 
-mongoose.connect(db_url); 
+var db = mongoose.connect(db_url); 
 
 //Connection Events 
 //When successfully connected: 
@@ -206,47 +220,7 @@ var callHistorySchema = new Schema({
 //Converting our callHistory schema into a Model 
 var callHistory = mongoose.model('callHistory', callHistorySchema); 
 
-
-//Routes for Database 
-//GET all call history 
-router.get('/callHistory', function(req, res, next){
-	//use mongoose to GET all the callHistory in the database 
-	callHistory.find(function(error, callHistory){
-		//if there is a retrieval error, send error 
-		//else, nothing res.send(error) will execute 
-		if(err){
-			res.send(err); 
-		}
-		res.json(callHistory); 
-	});
-});
-
-
-//Create call history and send back all calls after creating 
-router.post('/callHistory', function(req, res, next){
-	var phonenumber = "+1" + req.body.phonenumber;
-	console.log(phonenumber); 
-
-	//Create a call history - information comes from AJAX request from Angular 
-	callHistory.create({
-		numberEntered: phonenumber
-	}, function(err, callHistory){
-		if(err){
-			res.send(err);
-		}
-
-		callHistory.find(function(err, callHistory){
-			if(err){
-				res.send(err);
-			}
-		res.json(callHistory);
-		});
-	});
-});
-//App calls for Database 
-app.get('callHistory', router); 
-app.post('callHistory', router); 
-
 */
+
 
 

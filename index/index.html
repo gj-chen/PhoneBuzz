@@ -20,28 +20,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
     <script src="newserver.js"></script>
 
-    <!-- PROCESS FORM WITH AJAX (NEW) -->
-    <script>
-    // define angular module/app
-    var formApp = angular.module('formApp', []);
-    // create angular controller and pass in $scope and $http
-    formApp.controller('formController', [$scope, function($scope){
-        $scope.formData = {};
-
-        //process the form 
-        $scope.processForm = function(){
-            $http({
-                method:'POST',
-                url: '/getnumber',
-                data: $.param($scope.formData), //pass in data as strings 
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-        };
-    }]);
-  </script>
-    
 </head>
-<body ng-app = "formApp" ng-controller = "formController">
+<body>
     <h1>PhoneBuzz</h1>
             <section>             
                     <h3>Instructions</h3>
@@ -51,36 +31,46 @@
                     <p>Don't forget to enter the time delay. To have no time delay, enter 0.</p>
                     <p>Please only input only the 10 digit number: Ex: 5102891555</p>
                     
-            <form ng-submit = "processForm">
-                <label>Phone Number</label>
-                <input type="text" name="phonenumber" placeholder="Phone Number" ng-model="formData.phonenumber">
-                
-                <label>Time Delay</label>
-                <input type="text" name="timedelay" placeholder="Time Delay" ng-model="formData.timedelay">
-                
-                <input type="submit" id="submit" value="Submit"/>
-            </form>
-            </section>
-    
+                <form id = 'callNumber' action = "/getnumber" action ="POST">
+                    <input type="text" name="phonenumber" placeholder="Phone Number">
+                    <input type="text" name="timedelay" placeholder="Time Delay">
+                    <input type="submit" value="Submit">
+                </form>    
+            </section> 
+       
 
-     <!-- PROCESS FORM WITH AJAX (NEW) -->
-    <script>
-    // define angular module/app
-    var formApp = angular.module('formApp', []);
-    // create angular controller and pass in $scope and $http
-    formApp.controller('formController', [$scope, function($scope){
-        $scope.formData = {};
+            <SCRIPT TYPE="text/javascript">
+               //function to show input 
+             
+                $(function(){
+                     // Intercept form submission and submit the form with ajax
+                    $('#callNumber').on('submit', function(e) {
+                    // Prevent submit event from bubbling and automatically submitting the
+                    // form
+                    e.preventDefault();
 
-        //process the form 
-        $scope.processForm = function(){
-            $http({
-                method:'POST',
-                url: '/getnumber',
-                data: $.param($scope.formData), //pass in data as strings 
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-        };
-    }]);
-  </script>
+                // Call our ajax endpoint on the server to initialize the phone call
+                $.ajax({
+                    url: '/getnumber',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        phonenumber: $('#phonenumber').val()
+                        timedelay: $('#timedelay').val()
+                    }
+                    success: function(data) {
+                        console.log('successfully called');
+                    },
+                    error : function() {
+                        console.log('error');
+                    }
+                })
+                });
+                });
+
+
+                   
+            </SCRIPT>
+
 </body> 
 </html>
